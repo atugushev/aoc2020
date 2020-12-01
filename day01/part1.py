@@ -6,6 +6,17 @@ import pytest
 
 
 def solve(input_string: str) -> int:
+    ints = [int(line) for line in input_string.split("\n")]
+
+    hashtable = {}
+
+    for x in ints:
+        hashtable[2020 - x] = x
+
+    for y in ints:
+        if y in hashtable:
+            return y * hashtable[y]
+
     return -1
 
 
@@ -23,7 +34,7 @@ def main(argv: List[str]) -> int:
     "input_string, expected",
     (
         # test cases
-        # ("", None),
+        ("1721\n979\n366\n299\n675\n1456", 514579),
     ),
 )
 def test(input_string: str, expected: int) -> None:
