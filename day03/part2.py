@@ -1,4 +1,5 @@
 import argparse
+import math
 import sys
 from typing import List
 
@@ -6,7 +7,30 @@ import pytest
 
 
 def solve(input_string: str) -> int:
-    return -1
+    lines = input_string.split()
+
+    res = []
+
+    for right, down in ((1, 1), (3, 1), (5, 1), (7, 1), (1, 2)):
+        count = 0
+        i = 0
+
+        for j in range(0, len(lines), down):
+            if j == 0:
+                continue
+
+            line = lines[j]
+
+            i += right
+            if i >= len(line):
+                i %= len(line)
+
+            if line[i] == "#":
+                count += 1
+
+        res.append(count)
+
+    return math.prod(res)
 
 
 def main(argv: List[str]) -> int:
@@ -20,6 +44,17 @@ def main(argv: List[str]) -> int:
 
 
 EXAMPLE_INPUT = """\
+..##.......
+#...#...#..
+.#....#..#.
+..#.#...#.#
+.#...##..#.
+..#.##.....
+.#.#.#....#
+.#........#
+#.##...#...
+#...##....#
+.#..#...#.#\
 """
 
 
@@ -27,7 +62,7 @@ EXAMPLE_INPUT = """\
     "input_string, expected",
     (
         # test cases
-        # (EXAMPLE_INPUT, None),
+        (EXAMPLE_INPUT, 336),
     ),
 )
 def test(input_string: str, expected: int) -> None:

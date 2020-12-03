@@ -6,7 +6,23 @@ import pytest
 
 
 def solve(input_string: str) -> int:
-    return -1
+    lines = input_string.split()
+
+    i = 0
+    res = 0
+
+    for j, line in enumerate(lines):
+        if j == 0:
+            continue
+
+        i += 3
+        if i >= len(line):
+            i %= len(line)
+
+        if line[i] == "#":
+            res += 1
+
+    return res
 
 
 def main(argv: List[str]) -> int:
@@ -20,6 +36,17 @@ def main(argv: List[str]) -> int:
 
 
 EXAMPLE_INPUT = """\
+..##.......
+#...#...#..
+.#....#..#.
+..#.#...#.#
+.#...##..#.
+..#.##.....
+.#.#.#....#
+.#........#
+#.##...#...
+#...##....#
+.#..#...#.#\
 """
 
 
@@ -27,7 +54,7 @@ EXAMPLE_INPUT = """\
     "input_string, expected",
     (
         # test cases
-        # (EXAMPLE_INPUT, None),
+        (EXAMPLE_INPUT, 7),
     ),
 )
 def test(input_string: str, expected: int) -> None:
